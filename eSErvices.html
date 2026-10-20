@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eServices - Government Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Lexend', 'sans-serif']
+                    },
+                    colors: {
+                        'gov-blue': '#295BAA',
+                        'gov-blue-light': '#1A68A3',
+                        'gov-blue-bg': '#E8EFFA',
+                        'gov-gray': '#414042',
+                        'gov-text-gray': '#6F6F6F',
+                        'gov-light-gray': '#475467',
+                        'gov-desc-gray': '#6A7A8A',
+                        'gov-border-gray': '#344054'
+                    },
+                    keyframes: {
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        'fade-in-down': {
+                            '0%': { opacity: '0', transform: 'translateY(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        'slide-in-right': {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        'slide-in-left': {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        'scale-in': {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        'hero-title': {
+                            '0%': { opacity: '0', transform: 'translateY(40px) scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
+                        },
+                        'search-bounce': {
+                            '0%': { opacity: '0', transform: 'translateY(30px) scale(0.8)' },
+                            '50%': { transform: 'translateY(-5px) scale(1.02)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
+                        },
+                        'tag-float': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fade-in 0.8s ease-out forwards',
+                        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+                        'fade-in-down': 'fade-in-down 1s ease-out forwards',
+                        'slide-in-right': 'slide-in-right 1s ease-out forwards',
+                        'slide-in-left': 'slide-in-left 0.8s ease-out forwards',
+                        'scale-in': 'scale-in 0.6s ease-out forwards',
+                        'hero-title': 'hero-title 1.2s ease-out forwards',
+                        'search-bounce': 'search-bounce 1s ease-out forwards',
+                        'tag-float': 'tag-float 0.8s ease-out forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white" x-data="{ mobileMenuOpen: false }">
+    <!-- Header -->
+    <header class=" sticky top-1 mt-0 left-0 w-full bg-white opacity-0 animate-fade-in-down z-50" style="animation-delay: 0.2s">
+        <div class="flex items-center justify-between px-4 lg:px-[109px] py-2">
+            <!-- Logo -->
+            <div class="flex items-center opacity-0 animate-slide-in-left" style="animation-delay: 0.4s">
+                <img src="/images/logo.png" alt="Logo" class="w-[52px] h-[65px] transition-transform duration-300 hover:scale-110" />
+                <span class="text-xl sm:text-2xl lg:text-3xl text-gov-gray font-semibold pl-[16.89px] transition-colors duration-300 hover:text-gov-blue">eServices</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden lg:flex space-x-10 text-gov-text-gray font-semibold text-xl opacity-0 animate-fade-in-up" style="animation-delay: 0.6s">
+                <a href="#ministries" class="hover:text-gov-blue transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">Ministries</a>
+                <a href="#help" class="hover:text-gov-blue transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">Help</a>
+                <a href="#contactus" class="hover:text-gov-blue transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">Contact us</a>
+            </nav>
+
+            <!-- Auth buttons -->
+            <div class="hidden lg:flex items-center opacity-0 animate-slide-in-right" style="animation-delay: 0.8s">
+                <a href="signin.html" class="text-[#6E6E6E] text-lg font-semibold mr-4 transition-all duration-300 hover:text-gov-blue transform hover:scale-105">Sign in</a>
+                <a href="register.html">
+                    <button class="bg-gov-blue text-white px-6 py-2.5 rounded-md hover:bg-blue-700 font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                        Register
+                    </button>
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="sticky top-0 lg:hidden opacity-0 animate-scale-in" style="animation-delay: 0.8s">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-400 hover:text-gray-500 transition-all duration-300 transform hover:scale-110">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2" class="lg:hidden bg-white border-t border-gray-200 px-4 py-4">
+            <nav class="flex flex-col space-y-4">
+                <a href="#ministries" class="text-gov-text-gray font-semibold text-lg hover:text-gov-blue transition-all duration-300 transform hover:translate-x-2" @click="mobileMenuOpen = false">Ministries</a>
+                <a href="#help" class="text-gov-text-gray font-semibold text-lg hover:text-gov-blue transition-all duration-300 transform hover:translate-x-2" @click="mobileMenuOpen = false">Help</a>
+                <a href="#contactus" class="text-gov-text-gray font-semibold text-lg hover:text-gov-blue transition-all duration-300 transform hover:translate-x-2" @click="mobileMenuOpen = false">Contact us</a>
+                <div class="pt-4 border-t border-gray-200">
+                    <a href="signin.html" class="text-[#6E6E6E] text-lg font-semibold block mb-4 hover:text-gov-blue transition-all duration-300">Sign in</a>
+                    <a href="register.html">
+                        <button class="bg-gov-blue text-white px-6 py-2.5 rounded-md hover:bg-blue-700 font-semibold w-full transition-all duration-300 transform hover:scale-105">
+                            Register
+                        </button>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+        <div class="bg-[url('/images/herobg.png')] rounded-none sm:rounded-3xl m-0 sm:m-6 overflow-hidden bg-cover bg-center relative">
+            <!-- Animated overlay -->
+            <div class="absolute inset-0 bg-gradient-to-r from-gov-blue-light/20 to-transparent opacity-0 animate-fade-in" style="animation-delay: 1s"></div>
+            
+            <div class="flex flex-col items-center justify-center m-4 sm:m-8 py-6 sm:py-8 relative z-10">
+                <div class="flex flex-col items-center justify-center">
+                    <h1 class="text-white text-2xl sm:text-3xl lg:text-5xl font-normal text-center max-w-3xl leading-tight px-4 opacity-0 animate-hero-title" style="animation-delay: 0.3s">
+                        The simple and convenient way to access <b>Government services</b>.
+                    </h1>
+                    <div class="relative mt-6 opacity-0 animate-search-bounce" style="animation-delay: 1s">
+                        <input type="text" 
+                               placeholder="Search for a service"
+                               class=" placeholder:text-gray-800 pl-12 [280px] sm:w-[350px] lg:w-[550px] h-12 sm:h-14 px-4 rounded-full bg-white text-black placeholder:text-gray-400 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl">
+                               <svg 
+                                 class="absolute top-4 left-4 sm:top-5 "
+                                 width="20" height="20" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M11.084 1.31006C16.349 1.31006 20.6689 5.7179 20.6689 11.2192C20.6689 16.7205 16.349 21.1284 11.084 21.1284C5.81915 21.1282 1.50005 16.7204 1.5 11.2192C1.5 5.71805 5.81912 1.3103 11.084 1.31006Z" stroke="black" stroke-width="2"/>
+                                 <line x1="1" y1="-1" x2="8.11996" y2="-1" transform="matrix(-0.696346 -0.717706 0.696346 -0.717706 23.7847 24.3101)" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                               </svg>
+
+                    </div>
+                </div>
+            </div>
+                
+            <div class="text-left text-white font-normal text-lg w-full m-4 sm:m-6 max-w-full">
+                    <p class="mb-4 sm:mb-6 font-normal text-xl sm:text-2xl lg:text-3xl opacity-0 animate-slide-in-left" style="animation-delay: 2.2s">Popular Services</p>
+                    <ul class="flex flex-wrap gap-2 sm:gap-4 lg:gap-8 overflow-x-auto whitespace-nowrap text-black text-xs sm:text-sm font-normal my-4 sm:my-8">
+                        <li class="bg-white p-2 sm:p-4 rounded-full cursor-pointer hover:bg-gray-50 hover:scale-105 transition-all duration-300 hover:shadow-md opacity-0 animate-tag-float" style="animation-delay: 2.4s">Import & Export Declarations</li>
+                        <li class="bg-white p-2 sm:p-4 rounded-full cursor-pointer hover:bg-gray-50 hover:scale-105 transition-all duration-300 hover:shadow-md opacity-0 animate-tag-float" style="animation-delay: 2.5s">Declaration Tracking</li>
+                        <li class="bg-white p-2 sm:p-4 rounded-full cursor-pointer hover:bg-gray-50 hover:scale-105 transition-all duration-300 hover:shadow-md opacity-0 animate-tag-float" style="animation-delay: 2.6s">Permit Verification</li>
+                        <li class="bg-white p-2 sm:p-4 rounded-full cursor-pointer hover:bg-gray-50 hover:scale-105 transition-all duration-300 hover:shadow-md opacity-0 animate-tag-float" style="animation-delay: 2.7s">eCrude Oil Accreditation Permit</li>
+                        <li class="bg-white p-2 sm:p-4 rounded-full cursor-pointer hover:bg-gray-50 hover:scale-105 transition-all duration-300 hover:shadow-md opacity-0 animate-tag-float" style="animation-delay: 2.8s">ePetroleum Accreditation Permit</li>
+                    </ul>
+            </div>
+        </div>
+
+    <!-- Ministries Section -->
+    <section class="bg-gov-blue-bg py-4" id="ministries">
+        <div class="mx-4 sm:mx-8 lg:mx-16 my-6">
+            <h2 class="text-left text-2xl sm:text-3xl font-bold text-gov-blue mb-8 leading-relaxed kerning-relaxed opacity-0 animate-fade-in-up">Ministries</h2>
+            <!-- Ministry cards -->
+            <div x-data="cardGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="(card, index) in cards" :key="card.title">
+                  <div class="bg-white p-4 rounded-xl border border-[#EBEBEB] flex flex-col max-h-57 opacity-0 animate-fade-in-up ease-in-out transform">
+                     <!-- Top content -->
+                     <div class="flex flex-col md:flex-row mb-4 md:items-start">
+                       <img :src="card.image" :alt="card.title + ' Logo'" class="w-12 sm:w-16 sm:mb-4 md:mb-4 lg:mb-4 h-12 sm:h-16 object-cover rounded-full mr-4 flex-shrink-0">
+                       <div class="flex-1">
+                       <h3 class="text-sm sm:text-md font-bold text-black mb-2 leading-tight" x-text="card.title"></h3>
+                       <p class="text-xs sm:text-sm text-gov-desc-black font-normal mb-3 leading-relaxed" x-text="card.description"></p>
+                     </div>
+                 </div>
+                 <div class="flex-grow"></div><!-- Spacer to push HR + button to bottom -->
+                 <hr class="border-t border-1.5 border-[#EBEBEB] -mr-4 -ml-4 mb-4">
+                 <div class="flex justify-end">
+                    <a :href="card.link" target="_blank" 
+                     class="border-[#EBEBEB] h-10 sm:h-12 border-2 text-gov-border-gray py-2 sm:py-3 px-3 sm:px-4 m rounded-md hover:bg-gov-blue hover:text-white hover:border-gov-blue transition-all duration-300 font-medium text-sm sm:text-base">
+                     Get Service
+                    </a>
+                 </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+   <!--Why eServices?-->
+  <div class="bg-white pt-8 sm:pt-13 px-4 sm:px-8 lg:px-54">
+    <div class="max-w-5xl mx-auto pt-8 sm:pt-12 pb-0 sm:pb-0">
+        <div class="flex flex-col items-left w-full mb-8 opacity-0 animate-fade-in-up">
+            <h2 class="text-2xl sm:text-3xl font-semibold text-[#295BAA] mb-4 sm:mb-6 text-left">Why eServices?</h2>
+            <p class="text-[#475467] text-normal text-lg sm:text-xl lg:text-2xl">Over time, the Government will increase the number of services that are available online to the public</p>
+        </div>
+        <hr class="my-6 sm:my-8 w-full border-t border-gray-300 opacity-0 animate-fade-in">
+        <div class="flex flex-col lg:flex-row">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10 lg:pr-16 w-full lg:w-2/3">
+                <!--cards for why eservices-->
+                <div class="bg-white flex flex-col items-left pb-4 sm:pb-12 lg:pb-10 opacity-0 animate-fade-in-up hover:transform hover:scale-105 transition-all duration-300 ease-in-out" style="animation-delay: 0.1s">
+                    <img src="/images/Layer 2.png" alt="Icon" class="w-20 sm:w-24 h-20 sm:h-26 transition-transform duration-300 hover:scale-110">
+                    <p class="font-bold text-lg sm:text-2xl my-3 sm:my-4 text-black">Single Sign-on</p>
+                    <p class="text-[#6A7A8A] w-full text-sm sm:text-base">One account is all you need, a single username and password to get you into everything Government.</p>
+                </div>
+                <div class="bg-white flex-col items-left pb-4 sm:pb-12 opacity-0 animate-fade-in-up hover:transform hover:scale-105 transition-all duration-300 ease-in-out" style="animation-delay: 0.2s">
+                    <img src="/images/why-thumb.png" alt="Icon" class="w-20 sm:w-24 h-20 sm:h-26 transition-transform duration-300 hover:scale-110">
+                    <p class="text-lg sm:text-2xl font-bold my-3 sm:my-4 text-black">Convenience</p>
+                    <p class="text-[#6A7A8A] w-full text-sm sm:text-base">Pay from anywhere using mobile money, Debit and Credit Cards, and online banking from local banks.</p>
+                </div>
+                <div class="bg-white flex-col items-left opacity-0 pb-4 animate-fade-in-up hover:transform hover:scale-105 transition-all duration-300 ease-in-out" style="animation-delay: 0.3s">
+                    <img src="/images/notification.png" alt="Icon" class="w-20 sm:w-24 h-20 sm:h-26 transition-transform duration-300 hover:scale-110">
+                    <p class="text-lg sm:text-2xl font-bold my-3 sm:my-4 text-black">Notifications</p>
+                    <p class="text-[#6A7A8A] w-full text-sm sm:text-base">Receive email and SMS notification every time your application has progressed.</p>
+                </div>
+                <div class="bg-white flex-col items-left opacity-0 pb-4 animate-fade-in-up hover:transform hover:scale-105 transition-all duration-300 ease-in-out" style="animation-delay: 0.4s">
+                    <img src="/images/why-print.png" alt="Icon" class="w-20 sm:w-24 h-20 sm:h-26 transition-transform duration-300 hover:scale-110">
+                    <p class="text-lg sm:text-2xl font-bold my-3 sm:my-4 text-black">Online Services</p>
+                    <p class="text-[#6A7A8A] w-full text-sm sm:text-base">Fill online application forms, submit then receive your permit in PDF format from wherever you are.</p>
+                </div>                    
+            </div>
+            <div class="bg-gov-blue-bg flex justify-end items-end p-0 -mb-0 w-full lg:w-1/3 flex justify-end">
+              <img src="/images/HappyClient.png" alt="Happy Client" class="object-contain object-fill object-bottom opacity-0t" style="animation-delay: 0.5s">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Get Government Services Section -->
+     <section class="bg-gov-blue text-white px-4 sm:px-8 lg:px-40 py-8 sm:py-12 lg:px-52 lg:py-14 ">
+        <div class="flex flex-col sm:flex-row justify-between">
+            <div class="w-auto sm:w-1/2 mb-6 lg:mb-0">
+               <div class="mr-0 sm:mr-10 text-xl sm:text-2xl lg:text-3xl font-normal sm:justify-center">Get Government Services Now!</div>
+               <div class="text-lg sm:text-xl font-light">A single account for all Government to citizen services</div> 
+            </div>
+            <div class="w-full sm:w-auto justify-center">
+                <button class="bg-[#618ED9] font-normal rounded-lg px-4 py-3 sm:py-2 lg:py-2 hover:bg-blue-500 hover:scale-105 text-white transition-all duration-300 max-w-40 sm:w-auto hover:shadow-lg">
+                    <a href="register.html">Create account</a>
+                </button>
+            </div> 
+        </div>
+     </section>
+
+    <!-- Footer -->
+<footer class="bg-gray-100 text-black py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-10" x-data="{ year: new Date().getFullYear() }">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col gap-6 sm:gap-8 lg:gap-10 items-center text-center mb-6 sm:mb-8">
+            <h4 class="text-lg sm:text-xl font-semibold mb-2 sm:mb-4">
+                Ministry of Information Communication Technology & Postal Services.
+            </h4>
+            <p class="text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed max-w-4xl">
+                This is the Government eServices Portal of South Sudan, developed to enable single window access to services being provided by the various South Sudan Government entities. It is designed and developed by the Ministry of Information Communication Technology & Postal Services, Government of South Sudan.
+            </p>
+        </div>
+        
+        <hr class="border-t border-gray-300 mb-4 sm:mb-6">
+        
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="text-xs sm:text-sm mb-4 md:mb-0">
+                © <span x-text="year"></span> All rights reserved.
+            </div>
+            <div class="text-xs sm:text-sm flex items-center m-0 justify-center">
+                <p>Proudly South<br> Sudanese</p>
+                <img src="/images/SouthSudaneseFlag.jpeg" alt="South Sudanese Flag" class="w-16 sm:w-20 h-8 sm:h-10 ml-2">
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--<template x-for="(card, index) in cards" :key="card.title">
+                  <div class="bg-white p-4 rounded-xl border border-[#EBEBEB] flex max-h-57 opacity-0 animate-fade-in-up ease-in-out transform">
+                     <!--Top content 
+                     <div class="flex items-start mb-4 sm:flex-col">
+                       <img :src="card.image" :alt="card.title + ' Logo'" class="w-12 sm:w-16 h-12 sm:h-16 object-cover rounded-full mr-4 flex-shrink-0">
+                       <div class="flex-col sm:flex sm:flex-col lg:items-start">
+                       <h3 class="text-sm sm:text-md font-bold text-black mb-2 leading-tight" x-text="card.title"></h3>
+                       <p  class="text-xs sm:text-sm text-gov-desc-black font-normal mb-3 leading-relaxed" x-text="card.description"></p>
+                     </div>
+                 </div>
+                 <div class="flex-grow"></div><!-- Spacer to push HR + button to bottom 
+                 <hr class="border-t border-1.5 border-[#EBEBEB] -mr-4 -ml-4 mb-4">
+                 <div class="flex justify-end">
+                    <a :href="card.link" target="_blank" 
+                     class="border-[#EBEBEB] h-10 sm:h-12 border-2 text-gov-border-gray py-2 sm:py-3 px-3 sm:px-4 m rounded-md hover:bg-gov-blue hover:text-white hover:border-gov-blue transition-all duration-300 font-medium text-sm sm:text-base">
+                     Get Service
+                    </a>
+                 </div>
+                </template>-->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cardGrid', () => ({
+                cards: [
+                    {
+                        image: '/images/Ellipse 1087.png',
+                        title: 'SSRA - Customs Declaration',
+                        description: 'Apply for permits and clearances issued by South Sudan Revenue Authority. e.g. Certificate of Destination',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/MTI.png',
+                        title: 'Ministry of Trade and Industry',
+                        description: 'Apply for Accreditation Permit',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/DCNPI.png',
+                        title: 'Directorate of civil registry, Nationality, Passports and Immigration',
+                        description: 'Apply for permits and clearances issued by South Sudan Revenue Authority. e.g. Certificate of Destination',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/MHealth.png',
+                        title: 'Ministry of Health',
+                        description: 'Apply for a COVID-19 test and receive your results online with verifiable public health documentation especially for travellers.',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/MJustice.png',
+                        title: 'Ministry of Justice - New E-Business Portal',
+                        description: 'Register and Manage your Business, Partnership or Company online.',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/MJustice.png',
+                        title: 'Ministry of Justice: Validate Business',
+                        description: 'Ensure the records of your business or company\'s ownership are duly updated and accurate.',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/MInvestment.png',
+                        title: 'Ministry Of Investment',
+                        description: 'Apply for the Investment Certificate for National and Foreign companies, pay and download your Certificate online.',
+                        link: 'https://ssra.gov.ss/'
+                    },
+                    {
+                        image: '/images/MPetroleum.png',
+                        title: 'Ministry Of Petroleum',
+                        description: 'Apply for Ministry of Petroleum services online.',
+                        link: 'https://ssra.gov.ss/'
+                    }
+                ]
+            }))
+        })
+    </script>
+</body>
+</html>
